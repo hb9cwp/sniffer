@@ -21,7 +21,6 @@ var (
 type Config struct {
 	iface      string
 	pcapOut    string
-	enableAF   bool
 	pcapFile   *os.File
 	pcapWriter *pcapgo.Writer
 	sniffer    Sniffer
@@ -32,7 +31,7 @@ func main() {
 	// Parse any set command line flags
 	iniflags.Parse()
 
-	config := &Config{iface: *iface, pcapOut: *pcapOut, enableAF: *enableAF, isRunning: true}
+	config := &Config{iface: *iface, pcapOut: *pcapOut, isRunning: true}
 
 	// On ^C or SIGTERM, gracefully stop anything running
 	sigc := make(chan os.Signal, 1)
