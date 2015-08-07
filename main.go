@@ -15,7 +15,6 @@ import (
 var (
 	iface    = flag.String("iface", "eth0", "Interface to capture packets")
 	pcapOut  = flag.String("pcapOut", "", "File path to log all packets")
-	enableAF = flag.Bool("enableAf", false, "Enable afpacket mode")
 )
 
 // Store useful variables and objects
@@ -52,13 +51,13 @@ func main() {
 
 	// Listen on the interface
 	var sniffer Sniffer
-	if config.enableAF {
-		sniffer = &AfpacketSniffer{}
-		log.Print("Using afpacket to sniff packets")
-	} else {
+	//if config.enableAF {
+	//	sniffer = &AfpacketSniffer{}
+	//	log.Print("Using afpacket to sniff packets")
+	//} else {
 		sniffer = &PcapSniffer{}
 		log.Print("Using libpcap to sniff packets")
-	}
+	//}
 
 	if err := sniffer.Open(config); err != nil {
 		log.Fatal("Failed to open the sniffer: ", err)
