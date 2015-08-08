@@ -13,7 +13,7 @@ import (
 
 // Command line flags and documentation
 var (
-	iface    = flag.String("iface", "eth0", "Interface to capture packets")
+	iface    = flag.String("iface", "alc0", "Interface to capture packets")
 	pcapOut  = flag.String("pcapOut", "", "File path to log all packets")
 )
 
@@ -27,11 +27,13 @@ type Config struct {
 	isRunning  bool
 }
 
+
 func main() {
 	// Parse any set command line flags
 	iniflags.Parse()
 
 	config := &Config{iface: *iface, pcapOut: *pcapOut, isRunning: true}
+	//config := &types.SnifferDriverOptions{}
 
 	// On ^C or SIGTERM, gracefully stop anything running
 	sigc := make(chan os.Signal, 1)
@@ -54,8 +56,10 @@ func main() {
 	//	sniffer = &AfpacketSniffer{}
 	//	log.Print("Using afpacket to sniff packets")
 	//} else {
-		sniffer = &PcapSniffer{}
-		log.Print("Using libpcap to sniff packets")
+	//	sniffer = &PcapSniffer{}
+	//	log.Print("Using libpcap to sniff packets")
+		sniffer = &BPFSniffer{}
+		log.Print("Using bsdbpf to sniff packets")
 	//}
 
 	if err := sniffer.Open(config); err != nil {
