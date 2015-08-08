@@ -33,7 +33,6 @@ func main() {
 	iniflags.Parse()
 
 	config := &Config{iface: *iface, pcapOut: *pcapOut, isRunning: true}
-	//config := &types.SnifferDriverOptions{}
 
 	// On ^C or SIGTERM, gracefully stop anything running
 	sigc := make(chan os.Signal, 1)
@@ -52,15 +51,16 @@ func main() {
 
 	// Listen on the interface
 	var sniffer Sniffer
-	//if config.enableAF {
-	//	sniffer = &AfpacketSniffer{}
-	//	log.Print("Using afpacket to sniff packets")
-	//} else {
-	//	sniffer = &PcapSniffer{}
-	//	log.Print("Using libpcap to sniff packets")
+//	if config.enableAF {
+//		sniffer = &AfpacketSniffer{}
+//		log.Print("Using afpacket to sniff packets")
+//	else if config.enableBSDBPF {
 		sniffer = &BPFSniffer{}
 		log.Print("Using bsdbpf to sniff packets")
-	//}
+//	} else {
+//		sniffer = &PcapSniffer{}
+//		log.Print("Using libpcap to sniff packets")
+//	}
 
 	if err := sniffer.Open(config); err != nil {
 		log.Fatal("Failed to open the sniffer: ", err)
