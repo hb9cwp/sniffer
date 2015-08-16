@@ -23,7 +23,7 @@ func (s *PcapSniffer) Open(config *Config) error {
 		// Timeout duration
 		flushAfter string = "10s"
 		//BPF filter when capturing packets
-		filter string = "ip"
+		filter string = "ip or ip6"
 	)
 
 	// Open the interface
