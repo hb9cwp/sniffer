@@ -1,8 +1,14 @@
+// +build !linux
+
 /*
  from 
   pcap.go
  and
   https://github.com/david415/HoneyBadger/blob/master/drivers/bpf.go
+
+ use build constraints
+  https://golang.org/src/go/build/doc.go
+
 */
 
 package main

@@ -22,9 +22,11 @@ type Sniffer interface {
 var (
 	eth     layers.Ethernet
 	ip      layers.IPv4
+	ip6     layers.IPv6
 	tcp     layers.TCP
 	udp     layers.UDP
 	icmp    layers.ICMPv4
+	icmp6   layers.ICMPv6
 	dns     layers.DNS
 	payload gopacket.Payload
 )
@@ -39,9 +41,11 @@ func Listen(config *Config) error {
 		layers.LayerTypeEthernet,
 		&eth,
 		&ip,
+		&ip6,
 		&tcp,
 		&udp,
 		&icmp,
+		&icmp6,
 		&dns,
 		&payload)
 
@@ -66,7 +70,9 @@ func Listen(config *Config) error {
 		        for _, layerType := range decoded {
 		            switch layerType {
 		                case layers.LayerTypeIPv4:
-		                    log.Printf("src: %v, dst: %v, proto: %v", ip.SrcIP, ip.DstIP, ip.Protocol)
+		                    log.Printf("IPv4  src: %v, dst: %v, proto: %v", ip.SrcIP, ip.DstIP, ip.Protocol)
+		                case layers.LayerTypeIPv6:
+		                    log.Printf("IPv6  src: %v, dst: %v", ip6.SrcIP, ip6.DstIP)
 		            }
 		        }
 
